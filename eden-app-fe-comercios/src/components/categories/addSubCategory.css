@@ -1,0 +1,72 @@
+.add-subcategory .title{
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 35px;
+    letter-spacing: 0em;
+    text-align: right;
+    padding-right: 20px;
+    padding-top: 15px;
+}
+
+.add-subcategory .button{
+    background-color: #79DE95;
+    border-color: #79DE95;
+    height: 68px;
+    width: 326px;
+    border-radius: 12px;
+    text-align: center;
+    padding: 10px;
+}
+
+.add-subcategory .button span{
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 35px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: black;
+}
+
+.add-subcategory .subcategory-form{
+    width: 100%;
+    padding-top: 32px;
+    display: block;
+}
+
+.add-subcategory .subcategory-form-hide{
+    display: none;
+}
+
+
+.add-subcategory .subcategory-form .container{
+    display: flex;
+}
+
+.add-subcategory .subcategory-form .container .column{
+    width: 45%;
+}
+
+.add-subcategory .container .ant-form-item-label > label{
+    color: white;
+}
+
+.add-subcategory .dynamic-edit-button{
+    padding-left: 5px;
+}
+
+.add-subcategory .dynamic-delete-button{
+    padding-left: 5px;
+}
+
+.add-subcategory .dynamic-input{
+    background-color: #C4C4C4;
+    width: 226px;
+    height: 30px;
+    border-radius: 12px;
+}
+
+.add-subcategory .bottom-section{
+    padding-left: 40%;
+}

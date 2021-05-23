@@ -1,0 +1,18 @@
+.header-content{
+    padding-top: 25px;
+    display: flex;
+    padding-left: 45px;
+}
+
+.login-button{
+    height: 50px;
+    width: 178px;
+    border-radius: 12px;
+    background-color:#C4C4C4;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: left;
+}
