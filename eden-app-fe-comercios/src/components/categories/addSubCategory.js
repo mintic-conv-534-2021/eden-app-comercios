@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Row, Col, Form, Input, Button } from "antd";
+import { Typography, Row, Col, Form, Input, Button, Modal } from "antd";
 import axios from "axios";
 import {
   MinusCircleOutlined,
@@ -9,6 +9,7 @@ import {
 import "./addSubCategory.css";
 
 import { API_ADMIN } from "../../context/constants";
+import cert_img from "../../images/Certification.gif";
 
 const { Title } = Typography;
 const urlGET = API_ADMIN + "catalogo-producto";
@@ -46,19 +47,17 @@ const AddSubCategory = (category) => {
   const [subCategory, setSubCategory] = useState("");
   const [initialValues, setInitialValues] = useState("");
   const [displayForm, setDisplayForm] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
     if (category !== setCategory) {
       setSelectedCategory(category);
       setDisplayForm(false);
-      
+
       // Get SubCategory by Category Id
       axios
         .get(urlGET)
         .then((res) => setSubCategory(res.data.catalogoProductoDTOList));
-
-      console.log("subCategory");
-      console.log(subCategory);
 
       var initForm = {
         names: [],
@@ -93,6 +92,18 @@ const AddSubCategory = (category) => {
     setDisplayForm(true);
   };
 
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   const onFinish = (values) => {
     console.log("Received values of form:", values);
 
@@ -116,7 +127,14 @@ const AddSubCategory = (category) => {
     });
 
     payload.catalogoProductoDTOList = itemsArr;
+
+    //Insert
     console.log(payload);
+
+    showModal();
+
+    //Hide form
+    setDisplayForm(false);
   };
 
   const handleClick = (e) => {
@@ -151,7 +169,9 @@ const AddSubCategory = (category) => {
               <Form
                 name="dynamic_form_item"
                 {...formItemLayoutWithOutLabel}
-                className={displayForm ? "subcategory-form" : "subcategory-form-hide"}
+                className={
+                  displayForm ? "subcategory-form" : "subcategory-form-hide"
+                }
                 initialValues={initialValues}
                 onFinish={onFinish}
               >
@@ -293,6 +313,28 @@ const AddSubCategory = (category) => {
             </Col>
             <Col span={4} flex="20%" />
           </Row>
+
+          <Modal
+            title=""
+            width={"50%"}
+            height={"50%"}
+            className="custom-modal"
+            visible={isModalVisible}
+            onOk={handleOk}
+            onCancel={handleCancel}
+            closable={true}
+            bodyStyle={{ padding: "10px 24px 10px 24px", overflowY: "auto" }}
+            footer={null}
+          >
+            <div className="description-container">
+              <div className="photo">
+                <img src={cert_img} alt="sub assistant" />
+              </div>
+              <div className="general">
+                <p>Tu información se ha actualizado con Éxito!</p>
+              </div>
+            </div>
+          </Modal>
         </div>
       )}
     </div>

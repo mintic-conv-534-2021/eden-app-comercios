@@ -70,3 +70,25 @@
 .add-subcategory .bottom-section{
     padding-left: 40%;
 }
+
+/* Modal */
+.ant-modal-content{
+    border-radius: 12px;
+}
+
+.custom-modal .description-container{
+    display: flex;
+}
+
+.custom-modal .description-container .general{
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 40px;
+    letter-spacing: 0em;
+    text-align: left;
+    display: flex;
+    align-items: center;    
+}
+
+
