@@ -42,48 +42,59 @@ const catalogProduct = {
   activo: true,
 };
 
+var initForm = {
+  names: [],
+  names2: [],
+};
+
 const AddSubCategory = (category) => {
   const [setCategory, setSelectedCategory] = useState(category);
   const [subCategory, setSubCategory] = useState("");
   const [initialValues, setInitialValues] = useState("");
-  const [displayForm, setDisplayForm] = useState(false);
+  const [displayForm, setDisplayForm] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
     if (category !== setCategory) {
       setSelectedCategory(category);
       setDisplayForm(false);
-
-      // Get SubCategory by Category Id
+    
+     // Get SubCategory by Category Id
       axios
         .get(urlGET)
-        .then((res) => setSubCategory(res.data.catalogoProductoDTOList));
+        .then((res) => {
+          setSubCategory(res.data.catalogoProductoDTOList);
+          const light = res.data.catalogoProductoDTOList;
+          
+          if (Object.keys(light).length !== 0) {
+            let itemsArr1 = [];
+            let itemsArr2 = [];
+    
+            let flag = false;
+            light.forEach((prod) => {
+              //TODO: Validate organization catalog Id
+              if (flag) {
+                itemsArr2.push(prod.nombre);
+                flag = false;
+              } else {
+                itemsArr1.push(prod.nombre);
+                flag = true;
+              }
+            });
+    
+            initForm.names = itemsArr1;
+            initForm.names2 = itemsArr2;
 
-      var initForm = {
-        names: [],
-        names2: [],
-      };
-
-      if (Object.keys(subCategory).length !== 0) {
-        let itemsArr1 = [];
-        let itemsArr2 = [];
-
-        let flag = false;
-        subCategory.forEach((prod) => {
-          //TODO: Validate organization catalog Id
-          if (flag) {
-            itemsArr2.push(prod.nombre);
-            flag = false;
-          } else {
-            itemsArr1.push(prod.nombre);
-            flag = true;
+            console.log(initForm);
+            setInitialValues(initForm);
           }
+        })
+        .catch(function (error) {
+          setInitialValues(initForm);
+          console.log(error);
         });
-
-        initForm.names = itemsArr1;
-        initForm.names2 = itemsArr2;
-      }
-
+    }
+    else{
       setInitialValues(initForm);
     }
   }, [category, setCategory, subCategory]);
@@ -174,6 +185,7 @@ const AddSubCategory = (category) => {
                 }
                 initialValues={initialValues}
                 onFinish={onFinish}
+                
               >
                 <div className="container">
                   <div className="column">
@@ -218,6 +230,7 @@ const AddSubCategory = (category) => {
                                 <MinusCircleOutlined
                                   className="dynamic-delete-button"
                                   onClick={() => remove(field.name)}
+                                  //onClick={() => CustomRemove(field)}
                                 />
                               ) : null}
                             </Form.Item>

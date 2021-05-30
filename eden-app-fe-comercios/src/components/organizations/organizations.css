@@ -1,0 +1,12 @@
+.organizations .categories{
+    padding-left: 70px;
+}
+
+.organizations .organization-items{
+    padding-left: 70px;
+    padding-top: 70px;
+}
+
+.organizations .title-hide{
+    display: none;
+}

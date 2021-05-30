@@ -68,6 +68,14 @@ const Categories = () => {
       .then((res) => setCategories(res.data.catalogoOrganizacionDTOList));
   }, []);
 
+  const GenerateProps = (e) => {
+    let props = {
+      category: e,
+      showActionButton: true,
+    };
+    return props;
+  };
+
   return (
     <div className="categories">
       <Row wrap={false}>
@@ -80,7 +88,7 @@ const Categories = () => {
               categories.map((item) => (
                 <CategoryItem
                   key={item.catalogoOrganizacionId}
-                  category={item}
+                  category={GenerateProps(item)}
                 />
               ))}
           </Slider>

@@ -15,14 +15,22 @@ const Home = () => (
                 <span className="main-subtitle">Estas a punto de gestionar la plataforma</span>
                 <Row className="main-buttons">
                     <Col>
-                    <Link className="categories-button" to="/categories">
-                        <Button className="organizations-button"htmlType="button">
-                            <span className="button-text">Gestionar Categorias</span><i className="arrow right"></i>
-                        </Button>
-                    </Link>
+                        <Link 
+                            className="categories-button"
+                            to={{
+                                pathname: '/categories',
+                                state: { }}}>
+                            <Button className="organizations-button"htmlType="button">
+                                <span className="button-text">Gestionar Categorias</span><i className="arrow right"></i>
+                            </Button>
+                        </Link>
                     </Col>
                     <Col>
-                        <Link className="organizations-button" to="/organizations">
+                        <Link
+                            className="organizations-button"
+                            to={{
+                                pathname: '/organizations',
+                                state: { }}}>
                             <Button className="organizations-button" htmlType="button">
                                 <span className="button-text">Gestionar Organizaciones</span><i className="arrow right"></i>
                             </Button>
