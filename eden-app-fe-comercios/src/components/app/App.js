@@ -35,7 +35,7 @@ function App() {
                 <Route exact path="/categories/add" component={AddCategory} />
                 <Route exact path="/categories" component={Categories} />
                 <Route exact path="/organizations" component={Organizations} />
-                <Route exact path="/organizations/edit" component={EditOrganization} />
+                <Route exact path="/organizations/edit" render={(props) => <EditOrganization {...props}/>} />
                 <Route path="*" component={Error} />
               </Switch>
             </div>

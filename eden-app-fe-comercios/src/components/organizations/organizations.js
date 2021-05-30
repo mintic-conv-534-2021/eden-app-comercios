@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Typography } from "antd";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import Slider from "react-slick";
 
