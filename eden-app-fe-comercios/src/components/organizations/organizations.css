@@ -1,0 +1,47 @@
+.organizations .categories{
+    padding-left: 70px;
+}
+
+.organizations .organization-items{
+    padding-left: 70px;
+    padding-top: 70px;
+}
+
+.organizations .title{
+    padding-right: 20px;
+}
+
+.organizations .title-hide{
+    display: none;
+}
+
+.organizations .new-button{
+    background-color: #79DE95;
+    border-color: #79DE95;
+    height: 68px;
+    width: 326px;
+    border-radius: 12px;
+    text-align: center;
+    padding: 10px;
+}
+
+.organizations .new-button-hide{
+    display: none;
+    background-color: #79DE95;
+    border-color: #79DE95;
+    height: 68px;
+    width: 326px;
+    border-radius: 12px;
+    text-align: center;
+    padding: 10px;
+}
+
+.organizations .new-button span{
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 35px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: black;
+}

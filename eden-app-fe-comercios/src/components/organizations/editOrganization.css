@@ -1,0 +1,101 @@
+.add-organization{
+    padding-left: 70px;
+}
+
+.add-organization .logo-container{
+    height: 280px;
+    width: 315px;
+    background-color: #E5E5E5;
+    border-radius: 12px;    
+}
+
+.add-organization .banner-container{
+    height: 280px;
+    width: 975px;
+    background-color: #E5E5E5;
+    border-radius: 12px;    
+}
+
+.add-organization .upper-right{
+    padding-left: 20px;
+}
+
+.add-organization .lower-form{
+    padding-top: 30px;
+}
+
+.add-organization .lower-form .ant-form-item{
+    margin-bottom: 10px;
+}
+
+.add-organization .ant-form-item-label{
+    font-weight: bold;
+    width: 232px;
+    text-align: right;
+}
+
+.add-organization .ant-form-item-label > label{
+    font-size: 16px;
+}
+
+.add-organization input.input{
+    background-color: #C4C4C4;
+    width: 350px;
+    height: 40px;
+    border-radius: 12px;
+}
+
+.add-organization textarea.input{
+    background-color: #C4C4C4;
+    width: 350px;
+    height: 92px;
+    border-radius: 12px;
+    resize: none;
+}
+
+.add-organization .required-form{
+    font-size: 12px;
+    font-style: italic;
+    padding-left: 40%;
+}
+
+.add-organization span.required{
+    color: red;
+}
+
+.add-organization .button-section{
+    width: 65%;
+    padding-top: 20px;
+}
+
+.add-organization .button-section .left-button{
+    text-align: right;
+    width: 50%;
+    padding-left: 10px;
+}
+
+.add-organization .button-section .right-button{
+    text-align: left;
+    width: 50%;
+    padding-left: 10px;
+}
+
+.add-organization button{
+    background-color: #79DE95;
+    border-color: #79DE95;
+    height: 68px;
+    width: 326px;
+    border-radius: 12px;
+    text-align: center;
+    padding: 10px;
+}
+
+.add-organization  button span{
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 35px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: black;
+}

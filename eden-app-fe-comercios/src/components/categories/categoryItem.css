@@ -1,0 +1,119 @@
+.category-item .card{
+    width: 315px;
+    height: 170px;
+    background-color: #C4C4C4;
+    border-radius: 12px;
+}
+
+.category-item .card .card-image{
+    width: 315px;
+    height: 170px;
+    border-radius: 12px;
+}
+
+.category-item .card .ant-card-body{
+    padding: 0;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.category-item .card-title{
+    padding-top: 10px;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.category-item .card-description{
+    width: 315px;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.category-item .card-buttons{
+    text-align: right;
+    margin-top: -70px;
+    font-size: 45px;
+    border-radius: 12px;
+    position: absolute;
+    width: 108px;
+    margin-left: 200px;
+    
+}
+
+.category-item .card-buttons-hide{
+    text-align: right;
+    margin-top: -70px;
+    font-size: 45px;
+    border-radius: 12px;
+    position: absolute;
+    width: 108px;
+    margin-left: 200px;
+    display: none;
+}
+
+
+.category-item .card-buttons .dynamic-edit-button{
+    width: 48px;
+    height: 48px;
+    background-color: lightgray;
+    border-radius: 12px;
+    margin-right: 5px;
+    opacity: 0.2;
+}
+
+
+.category-item .card-buttons .dynamic-edit-button:hover {
+    opacity: 1;
+}
+
+/* Modal */
+.ant-modal-content{
+    border-radius: 12px;
+}
+
+.custom-modal .description-container{
+    display: flex;
+}
+
+.custom-modal .description-container .general{
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 40px;
+    letter-spacing: 0em;
+    text-align: center;
+    display: flex;
+    align-items: center;    
+
+    flex-direction: column;
+    padding-top: 10%;
+}
+
+.custom-modal .description-container .photo img{
+    height: 410px;
+}
+
+.custom-modal .description-container .general .button-delete{
+    width: 290px;
+    height: 80px;
+    background-color: #FF2E56;
+    border-radius: 12px;
+}
+
+.custom-modal .description-container .general .button-delete span{
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 35px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
