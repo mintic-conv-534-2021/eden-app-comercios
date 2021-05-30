@@ -160,7 +160,7 @@ const AddSubCategory = (category) => {
             <Col span={4} flex="25%" />
             <Col span={8} flex="auto">
               <Title level={2} className="title">
-                Categorias de {setCategory.selectedCategory.nombre}
+                Catálogos de {setCategory.selectedCategory.nombre}
               </Title>
             </Col>
             <Col span={8} flex="auto">

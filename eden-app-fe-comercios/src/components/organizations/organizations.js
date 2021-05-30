@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Typography } from "antd";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Slider from "react-slick";
 
@@ -149,9 +150,26 @@ const Organizations = () => {
       </Row>
       <Row wrap={false}>
         <Col flex="auto" className="organization-items">
-          <Title className={viewTitle ? "title" : "title-hide"} level={2}>
-            Catálogo de {selectedCategory.nombre}
-          </Title>
+          <Row>
+            <Col>
+              <Title className={viewTitle ? "title" : "title-hide"} level={2}>
+                Catálogo de {selectedCategory.nombre}
+              </Title>
+            </Col>
+            <Col>
+            {/*               
+              <Link
+                className={viewTitle ? "new-button" : "new-button-hide"}
+                to={{
+                  pathname: "/organizations/add",
+                  state: {},
+                }}
+              >
+                <span>Nueva Categoría</span>
+              </Link> 
+            */}
+            </Col>
+          </Row>
           <Slider {...settingsOrg}>
             {organizations.length != null &&
               organizations.map((item) => (

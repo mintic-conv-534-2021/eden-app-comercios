@@ -12,6 +12,7 @@ import Home from "../home/home";
 import AddCategory from "../categories/addCategory";
 import Categories from "../categories/categories";
 import Organizations from "../organizations/organizations";
+import EditOrganization from "../organizations/editOrganization";
 import HeaderContent from "../header/header"
 import FooterContent from "../footer/footer"
 
@@ -34,6 +35,7 @@ function App() {
                 <Route exact path="/categories/add" component={AddCategory} />
                 <Route exact path="/categories" component={Categories} />
                 <Route exact path="/organizations" component={Organizations} />
+                <Route exact path="/organizations/edit" component={EditOrganization} />
                 <Route path="*" component={Error} />
               </Switch>
             </div>
