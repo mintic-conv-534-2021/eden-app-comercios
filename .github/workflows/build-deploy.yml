@@ -1,0 +1,55 @@
+# Este flujo de trabajo crea la versión de distribución del front, 
+# Para usar este flujo es necesario tener en cuenta:
+#
+# 1. Debe disponer de un Bucket S3 previamente creado.
+# 2. Debe estar configurado como sitio web estatico con cloudfront.
+# 3. Store an IAM user access key in GitHub Actions secrets named `AWS_ACCESS_KEY_ID`
+#    and `AWS_SECRET_ACCESS_KEY`.
+
+on:
+  push:
+    branches:
+      - feature/devops
+
+name: Despliegue en bucket s3
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      PROY_DIR: eden-app-fe-comercios
+    steps:
+        - uses: actions/checkout@v2
+
+        - name: Install dependencies
+          run: |
+            cd $PROY_DIR
+            npm install
+
+        - name: Build
+          run: |
+            cd $PROY_DIR
+            npm run build
+
+        - name: Deploy
+          uses: jakejarvis/s3-sync-action@master
+          with:
+            args: --acl public-read --follow-symlinks --delete
+          env:
+            AWS_S3_BUCKET: ${{ secrets.S3_BUCKET }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: ${{ secrets.S3_BUCKET_REGION }}
+            SOURCE_DIR: '$PROY_DIR/build'
+          
+        # Invalidate Cloudfront (this action)
+        - name: invalidate
+          uses: chetan/invalidate-cloudfront-action@master
+          env:
+            DISTRIBUTION: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+            PATHS: '/*'
+            AWS_REGION: ${{ secrets.S3_BUCKET_REGION }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
