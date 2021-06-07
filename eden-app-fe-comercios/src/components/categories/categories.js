@@ -15,8 +15,8 @@ const settings = {
   dots: false,
   infinite: true,
   speed: 500,
-  slidesToShow: 4,
-  slidesToScroll: 4,
+  slidesToShow: 3,
+  slidesToScroll: 3,
   responsive: [
     {
       breakpoint: 1300,
@@ -35,8 +35,8 @@ const settings = {
     {
       breakpoint: 835,
       settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
+        slidesToShow: 1,
+        slidesToScroll: 1,
       },
     },
     {
@@ -65,7 +65,10 @@ const Categories = () => {
   useEffect(() => {
     axios
       .get(urlGET)
-      .then((res) => setCategories(res.data.catalogoOrganizacionDTOList));
+      .then((res) => setCategories(res.data.catalogoOrganizacionDTOList))
+      .catch(function (error) {
+        console.log(error);
+      });
   }, []);
 
   const GenerateProps = (e) => {
