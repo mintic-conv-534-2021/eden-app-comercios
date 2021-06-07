@@ -55,7 +55,7 @@ const CategoryItem = (props) => {
       </div>
 
       <Title className="card-title" level={5}>
-        {item.nombre}
+        {item.catalogoOrganizacionNombre}
       </Title>
       <div className="card-description">{item.descripcion}</div>
 
