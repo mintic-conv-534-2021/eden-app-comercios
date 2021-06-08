@@ -3,8 +3,7 @@ import { Typography, Row, Col, Form, Input, Button, Modal } from "antd";
 import axios from "axios";
 import {
   MinusCircleOutlined,
-  PlusOutlined,
-  SaveOutlined
+  PlusOutlined
 } from "@ant-design/icons";
 import "./addSubCategory.css";
 
