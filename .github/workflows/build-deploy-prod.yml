@@ -9,7 +9,7 @@
 on:
   push:
     branches:
-      - master
+      - main
 
 name: Despliegue en bucket s3
 
