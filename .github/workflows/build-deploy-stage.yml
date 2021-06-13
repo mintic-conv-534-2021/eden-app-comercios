@@ -23,6 +23,10 @@ jobs:
     steps:
         - uses: actions/checkout@v2
 
+        - name: Replace backend endpoint
+          run: |
+            sed -i.bak  's|http://localhost:8080|'$BACKEND_ENDPOINT'|g' eden-app-fe-comercios/src/context/constants.js
+
         - name: Install dependencies
           run: |
             cd $PROY_DIR
