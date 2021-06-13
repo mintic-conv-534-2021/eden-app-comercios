@@ -8,7 +8,7 @@ import OrganizationItem from "./organizationItem";
 import { API_ADMIN } from "../../context/constants";
 
 import "./organizations.css";
-const urlCategories = API_ADMIN + "catalogo-organizacion";
+const urlCategories = API_ADMIN + "catalogo-organizacion?filtrar-activos=true";
 const urlOrganizations = API_ADMIN + "organizacion/catalogo-organizacion/";
 const { Title } = Typography;
 
@@ -16,8 +16,8 @@ const settings = {
   dots: false,
   infinite: true,
   speed: 500,
-  slidesToShow: 5,
-  slidesToScroll: 5,
+  slidesToShow: 4,
+  slidesToScroll: 4,
   responsive: [
     {
       breakpoint: 1300,
@@ -55,34 +55,30 @@ const settingsOrg = {
   infinite: false,
   speed: 500,
   slidesToShow: 4,
-  slidesPerRow: 4,
+  slidesToScroll: 1,
   responsive: [
     {
       breakpoint: 1300,
       settings: {
         slidesToShow: 3,
-        slidesPerRow: 2,
       },
     },
     {
       breakpoint: 1075,
       settings: {
         slidesToShow: 3,
-        slidesPerRow: 2,
       },
     },
     {
       breakpoint: 835,
       settings: {
         slidesToShow: 2,
-        slidesToScroll: 2,
       },
     },
     {
       breakpoint: 585,
       settings: {
-        slidesToShow: 3,
-        slidesPerRow: 2,
+        slidesToShow: 2,
       },
     },
   ],
@@ -112,8 +108,8 @@ const Organizations = () => {
   const handleClick = (e) => {
     if (typeof e.item !== "undefined") {
       setSelectedCategory(e.item);
-      const myObjStr = JSON.stringify(e.item);
-      console.log("Received in Categories" + myObjStr);
+      //const myObjStr = JSON.stringify(e.item);
+      //console.log("Received in Categories" + myObjStr);
 
       setViewTitle(true);
 
@@ -152,21 +148,10 @@ const Organizations = () => {
           <Row>
             <Col>
               <Title className={viewTitle ? "title" : "title-hide"} level={2}>
-                Catálogo de {selectedCategory.nombre}
+                Catálogo de {selectedCategory.catalogoOrganizacionNombre}
               </Title>
             </Col>
             <Col>
-            {/*               
-              <Link
-                className={viewTitle ? "new-button" : "new-button-hide"}
-                to={{
-                  pathname: "/organizations/add",
-                  state: {},
-                }}
-              >
-                <span>Nueva Categoría</span>
-              </Link> 
-            */}
             </Col>
           </Row>
           <Slider {...settingsOrg}>

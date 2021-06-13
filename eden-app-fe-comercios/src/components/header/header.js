@@ -8,7 +8,7 @@ const { Title } = Typography;
 const Header = () => (
     <Row className="header-content">
         <Col flex="auto">
-            <Title level={3}>Paseo el Edén - Administración</Title>
+            <Title level={3}><a href="/">Paseo el Edén</a> - Administración</Title>
         </Col>
         <Col className="login-section" flex="100px">
             <Button className="login-button" htmlType="button">

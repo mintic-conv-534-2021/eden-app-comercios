@@ -13,6 +13,7 @@ import cert_img from "../../images/Certification.gif";
 const { Title } = Typography;
 const urlGET = API_ADMIN + "catalogo-producto/catalogo-organizacion/";
 const urlPOST = API_ADMIN + "catalogo-producto";
+const urlActive = API_ADMIN + "catalogo-producto/activo";
 
 const formItemLayout = {
   labelCol: {
@@ -30,13 +31,6 @@ const formItemLayoutWithOutLabel = {
     sm: { span: 20, offset: 4 },
   },
 };
-
-// Saving variables
-/* var payload = {
-  catalogoProductoDTOList: [],
-}; */
-
-var payload = [];
 
 const catalogProduct = {
   catalogoProductoId: "",
@@ -78,13 +72,14 @@ const AddSubCategory = (category) => {
 
             let flag = false;
             light.forEach((prod) => {
-              //TODO: Validate organization catalog Id
-              if (flag) {
-                itemsArr2.push(prod.catalogoProductoNombre);
-                flag = false;
-              } else {
-                itemsArr1.push(prod.catalogoProductoNombre);
-                flag = true;
+              if (prod.activo){
+                if (flag) {
+                  itemsArr2.push(prod.catalogoProductoNombre);
+                  flag = false;
+                } else {
+                  itemsArr1.push(prod.catalogoProductoNombre);
+                  flag = true;
+                }
               }
             });
 
@@ -120,11 +115,9 @@ const AddSubCategory = (category) => {
   };
 
   const onFinish = (values) => {
-    console.log("Received values of form:", values);
+    //console.log("Received values of form:", values);
 
-    let newPayload = Object.create(payload);
-
-    let itemsArr = [];
+    let newPayload = [];
     values.names.forEach((cat) => {
       const result = subCategory.find(e => e.catalogoProductoNombre === cat);
       if (typeof result === "undefined"){
@@ -133,7 +126,7 @@ const AddSubCategory = (category) => {
         custCat.catalogoOganizacionId = setCategory.selectedCategory.catalogoOrganizacionId;
         custCat.catalogoProductoNombre = cat;
         custCat.activo = true;
-        itemsArr.push(custCat);
+        newPayload.push(custCat);
       }
     });
 
@@ -145,14 +138,9 @@ const AddSubCategory = (category) => {
         custCat.catalogoOganizacionId = setCategory.selectedCategory.catalogoOrganizacionId;
         custCat.catalogoProductoNombre = cat;
         custCat.activo = true;
-        itemsArr.push(custCat);
+        newPayload.push(custCat);
       }
     });
-
-    newPayload = itemsArr;
-
-    //Insert
-    console.log(newPayload);
 
     axios
       .post(urlPOST, newPayload)
@@ -180,9 +168,7 @@ const AddSubCategory = (category) => {
       })
       .catch(function (error) {
         console.log(error);
-      });
-
-     
+      }); 
   };
 
   const handleClick = (e) => {
@@ -193,7 +179,6 @@ const AddSubCategory = (category) => {
     let { getFieldValue } = formRef.current;
 
     let itemByIndex = getFieldValue(arr)[index];
-    console.log("Item para borrar: " + itemByIndex);
 
     /* Elaborate this to update InitialValues prop*/
     const actualValues = initialValues;
@@ -210,13 +195,29 @@ const AddSubCategory = (category) => {
     //Existe en lo consultado de la BD
     if (result) {
       //Enviar a la BD
-      console.log("Enviar registro a la BD para eliminación:");
-      console.log(result);
+      //console.log("Enviar registro a la BD para eliminación: " + result.catalogoProductoId );
 
-      //Setear nuevamente subCategories
-      setSubCategory(subCategory.filter(item => item.catalogoProductoId !== result.catalogoProductoId));
-      setInitialValues(actualValues);
-      remove(index);
+      axios
+      .put(urlActive 
+        + "?catalogoProductoId=" 
+        + result.catalogoProductoId 
+        + "&activo=false", 
+      )
+      .then((response) => {
+        if (response.status === 202) {
+          console.log("ok");
+          //Setear nuevamente subCategories
+          setSubCategory(subCategory.filter(item => item.catalogoProductoId !== result.catalogoProductoId));
+          setInitialValues(actualValues);
+          remove(index);
+        }
+        else{
+          console.log("Unhandled status: " + response.status);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     }
     else {
       remove(index);
@@ -293,12 +294,6 @@ const AddSubCategory = (category) => {
                                   style={{ width: "85%" }}
                                 />
                               </Form.Item>
-{/*                               {fields.length > 0 ? (
-                                <SaveOutlined
-                                  className="dynamic-save-button"
-                                  onClick={() => console.log("handle save")}
-                                />
-                              ) : null} */}
                               {fields.length > 0 ? (
                                 <MinusCircleOutlined
                                   className="dynamic-delete-button"
@@ -354,12 +349,6 @@ const AddSubCategory = (category) => {
                                   style={{ width: "85%" }}
                                 />
                               </Form.Item>
-{/*                               {fields.length > 0 ? (
-                                <SaveOutlined
-                                  className="dynamic-save-button"
-                                  onClick={() => console.log("handle save")}
-                                />
-                              ) : null} */}
                               {fields.length > 0 ? (
                                 <MinusCircleOutlined
                                   className="dynamic-delete-button"

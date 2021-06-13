@@ -12,16 +12,24 @@ const CategoryItem = (props) => {
   const showButtons = props.category.showActionButton;
 
   const handleClick = (e) => {
-    e.item = item;
-    console.log(e.item);
+    let actionItem = {
+      action: "show",
+      category: item
+    }
+    e.item = actionItem;
   };
 
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
-    console.log("delete: " + item.nombre );
+  const handleOk = (e) => {
+    let actionItem = {
+      action: "delete",
+      category: item
+    }
+
+    e.item = actionItem;
     setIsModalVisible(false);
   };
 
@@ -31,6 +39,16 @@ const CategoryItem = (props) => {
 
   const Delete = () =>{
     showModal();
+  }
+
+  const Edit = (e) =>{
+    let actionItem = {
+      action: "edit",
+      category: item,
+      random: Math.random()
+    }
+
+    e.item = actionItem;
   }
 
   return (
@@ -45,7 +63,7 @@ const CategoryItem = (props) => {
         <EditTwoTone
           twoToneColor="black"
           className="dynamic-edit-button"
-          onClick={() => console.log("handle edit")}
+          onClick={(i) => Edit(i)}
         />
         <DeleteTwoTone
           twoToneColor="black"
@@ -65,7 +83,7 @@ const CategoryItem = (props) => {
             height={"50%"}
             className="custom-modal"
             visible={isModalVisible}
-            onOk={handleOk}
+            onOk={(i) => handleOk(i)}
             onCancel={handleCancel}
             closable={true}
             bodyStyle={{ padding: "10px 24px 10px 24px", overflowY: "auto" }}
@@ -80,7 +98,7 @@ const CategoryItem = (props) => {
                 <Button
                   key="submit"
                   type="primary"
-                  onClick={handleOk}
+                  onClick={(i) => handleOk(i)}
                   className="button-delete"
                 >
                   Eliminar

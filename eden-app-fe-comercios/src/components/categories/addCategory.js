@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { Form, Input, Button, Upload, message } from 'antd';
-import { notification } from 'antd';
+import React, { useState, useEffect } from "react";
+import { Form, Input, Button, Upload, message, Row, Col, notification } from 'antd';
 import axios from 'axios'
 import { API_ADMIN } from "../../context/constants"
 
@@ -8,7 +7,7 @@ import './addCategory.css';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 
 const urlPOST = API_ADMIN + 'catalogo-organizacion'
-const urlImage = 'http://www.teste.com.co/';
+const FormData = require('form-data');
 
 const openNotificationWithIcon = (type, title, message) => {
     notification[type]({
@@ -23,13 +22,41 @@ function getBase64(img, callback) {
     reader.readAsDataURL(img);
 }
 
-const AddCategory = () => {
+const AddCategory = (props) => {
     //Variables
     const [loading, setLoading] = useState("");
     const [imageUrl, setImageUrl] = useState("");
-    const [image, setImage] = useState("");
     const [shouldProcessImage, setShouldProcessImage] = useState(false);
+    const [shouldEdit, setShouldEdit] = useState(false);
+    const [itemEdit, setItemEdit] = useState({});
+
     const [form] = Form.useForm();
+
+    //Update everytime props changes
+    useEffect(() => {
+        if (Object.keys(props.categoryToEdit).length > 0) {
+            let categoryToEdit = props.categoryToEdit.category;
+
+            let file =
+            {
+                uid: '1',
+                name: 'image.png',
+                status: 'done',
+                url: categoryToEdit.urlImagen,
+            };
+
+            let editValues = {
+                category: categoryToEdit.catalogoOrganizacionNombre,
+                description: categoryToEdit.descripcion,
+                upload: file
+            }
+
+            setShouldEdit(true);
+            setItemEdit(categoryToEdit);
+            form.setFieldsValue(editValues);
+            setImageUrl(categoryToEdit.urlImagen);
+        }
+    }, [props, form]);
 
     function beforeUpload(file) {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -43,47 +70,64 @@ const AddCategory = () => {
         setShouldProcessImage(isJpgOrPng);
     }
 
-    const normFile = (e) => {
-        console.log('Upload event:', e);
-
-        if (e == null){
-            console.log(image);
-            setImage("");
-            setImageUrl("");
-            return null;
-        }
-
-        if (Array.isArray(e)) {
-            return e;
-        }
-
-        e.fileList = e.fileList.slice(-1);
-        setImage(e.fileList);
-        return image;
-    };
-
     const onFinish = (values) => {
-        if (values.upload == null){
+        //console.log(values);
+        if (values.upload == null) {
             openNotificationWithIcon('warning', 'Advertencia', 'Debes asociar una imagen antes de guardar');
             return;
         }
 
-        const imageBuild = urlImage + values.upload[0].name;
-        console.log('Success:', values);
-        console.log(values.category);
-        console.log(values.description);
-        console.log(imageBuild);
+        var bodyFormData = new FormData();
+        var requestParams = {};
 
-        axios.post(urlPOST, {
-            nombre: values.category,
-            descripcion: values.description,
-            urlImagen: image
-        })
+        if (shouldEdit) {
+            requestParams = {
+                catalogoOrganizacionId: itemEdit.catalogoOrganizacionId,
+                catalogoOrganizacionNombre: values.category,
+                descripcion: values.description,
+                urlImagen: itemEdit.urlImagen
+            }
+        }
+        else {
+            requestParams = {
+                catalogoOrganizacionNombre: values.category,
+                descripcion: values.description,
+                urlImagen: "",
+                activo: true
+            }
+        }
+
+        // Appending info to body form data
+        const json = JSON.stringify(requestParams);
+        const blob = new Blob([json], {
+            type: 'application/json'
+        });
+
+        bodyFormData.append('request', blob);
+        if (typeof values.upload.file !== "undefined") {
+            bodyFormData.append('imagen', values.upload.file.originFileObj, values.upload.file.name);
+        }
+
+        axios({
+            method: shouldEdit ? 'put' : 'post',
+            url: urlPOST,
+            data: bodyFormData,
+            headers : {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }
+          })
             .then((response) => {
                 if (response.status === 201) {
                     //Do something
-                    form.resetFields();
+                    onReset();
                     openNotificationWithIcon('success', 'Éxito', 'Se creó la categoría correctamente');
+                }
+                else if (response.status === 202) {
+                    //Do something
+                    onReset();
+                    openNotificationWithIcon('success', 'Éxito', 'Se editó la categoría correctamente');
                 }
                 else {
                     console.log("error");
@@ -98,7 +142,9 @@ const AddCategory = () => {
 
     const onReset = () => {
         form.resetFields();
-        normFile(null);
+        setImageUrl("");
+        setShouldEdit(false);
+        setItemEdit({});
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -106,7 +152,7 @@ const AddCategory = () => {
     };
 
     const handleChange = (info) => {
-        if (!shouldProcessImage){
+        if (!shouldProcessImage) {
             return;
         }
 
@@ -114,15 +160,6 @@ const AddCategory = () => {
             setLoading(true)
             return;
         }
-        /*         
-                
-                if (info.file.status === 'done') {
-                    // Get this url from response in real world.
-                    getBase64(info.file.originFileObj, imageUrl =>
-                        setImageUrl(imageUrl),
-                        setLoading(false)
-                    );
-                } */
 
         getBase64(info.file.originFileObj, imageUrl =>
             setImageUrl(imageUrl),
@@ -130,10 +167,14 @@ const AddCategory = () => {
         );
     };
 
+    const CancelEdit = () => {
+        onReset();
+    }
+
     const uploadButton = (
         <div>
             <div style={{ marginTop: 8 }}>
-                Agregar Categoría de Organización
+                {shouldEdit ? "Editar Categoría de Organización" : "Agregar Categoría de Organización"}
             </div>
             {loading ? <LoadingOutlined /> : <PlusOutlined />}
         </div>
@@ -145,9 +186,6 @@ const AddCategory = () => {
                 name="basic"
                 form={form}
                 className="form"
-                initialValues={{
-                    remember: true,
-                }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
@@ -155,7 +193,7 @@ const AddCategory = () => {
                     name="upload"
                     label=""
                     valuePropName="image"
-                    getValueFromEvent={normFile}
+                    //getValueFromEvent={normFile}
                     extra=""
                 >
                     <Upload
@@ -199,14 +237,32 @@ const AddCategory = () => {
                     <Input className="input" />
                 </Form.Item>
 
-                <Form.Item>
-                    <Button type="primary" className="button" htmlType="submit">
-                        Crear Categoría
-                    </Button>
-                    <Button htmlType="button" onClick={onReset}>
-                        Reset (Delete this soon)
-                    </Button>
-                </Form.Item>
+                {!shouldEdit &&
+                    <Form.Item>
+                        <Button type="primary" className="button button-create" htmlType="submit">
+                            Crear Categoría
+                        </Button>
+                    </Form.Item>
+                }
+
+                {shouldEdit &&
+                    <Row>
+                        <Col>
+                            <Form.Item>
+                                <Button type="primary" className="button" htmlType="submit">
+                                    Actualizar
+                                </Button>
+                            </Form.Item>
+                        </Col>
+                        <Col className="cancel-col">
+                            <Form.Item>
+                                <Button type="primary" onClick={CancelEdit} className="button" htmlType="button">
+                                    Cancelar
+                                </Button>
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                }
             </Form>
         </div>
     )

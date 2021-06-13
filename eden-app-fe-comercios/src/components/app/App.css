@@ -25,3 +25,7 @@
 .ant-layout.layout .ant-layout-header{
   background-color: white;
 }
+
+.slick-slider .slick-track, .slick-slider .slick-list{
+  margin-left:0;
+}

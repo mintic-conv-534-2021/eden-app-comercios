@@ -7,7 +7,7 @@ const { Title } = Typography;
 
 const Footer = () => (
     <div className="footer-content">
-        <Title level={2}>Footer test deploy devops</Title>
+        <Title level={2}>Footer</Title>
     </div>
 )
 

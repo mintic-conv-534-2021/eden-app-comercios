@@ -45,14 +45,21 @@
     border-radius: 12px;
 }
 
+.add-category .cancel-col{
+    padding-left: 20px;
+}
+
 .add-category .button{
     background-color: #79DE95;
     border-color: #79DE95;
     height: 68px;
-    width: 326px;
     border-radius: 12px;
     text-align: center;
     padding: 10px;
+}
+
+.add-category .button.button-create{
+    width: 326px;
 }
 
 .add-category .button span{

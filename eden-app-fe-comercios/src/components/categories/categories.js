@@ -9,7 +9,9 @@ import AddCategory from "../categories/addCategory";
 
 import { API_ADMIN } from "../../context/constants";
 import AddSubCategory from "./addSubCategory";
-const urlGET = API_ADMIN + "catalogo-organizacion";
+
+const urlGET = API_ADMIN + "catalogo-organizacion?filtrar-activos=true";
+const urlDeleteCat = API_ADMIN + "catalogo-organizacion/activo";
 
 const settings = {
   dots: false,
@@ -52,14 +54,45 @@ const settings = {
 const Categories = () => {
   const [categories, setCategories] = useState({});
   const [selectedCategory, setSelectedCategory] = useState({});
+  const [editCategory, setEditCategory] = useState({});
+
+  /* const myObjStr = JSON.stringify(e.item);
+  console.log("Received in Categories" + myObjStr); */
 
   const handleClick = (e) => {
     if (typeof e.item !== "undefined") {
-      setSelectedCategory(e.item);
-      const myObjStr = JSON.stringify(e.item);
-      console.log("Received in Categories" + myObjStr);
+      if (e.item.action === "show"){
+        setSelectedCategory(e.item.category);
+      }
+      else if (e.item.action === "delete"){
+        DeleteItem(e.item.category);      
+      }
+      else if (e.item.action === "edit"){
+        setEditCategory(e.item);
+      }
     }
   };
+
+  const DeleteItem = (item) => {
+    axios
+    .put(urlDeleteCat 
+      + "?catalogoOrganizacionId=" 
+      + item.catalogoOrganizacionId 
+      + "&activo=false", 
+    )
+    .then((response) => {
+      if (response.status === 202) {
+        //Setear nuevamente Categories
+        setCategories(categories.filter(cat => cat.catalogoOrganizacionId !== item.catalogoOrganizacionId ));
+      }
+      else{
+        console.log("Unhandled status: " + response.status);
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
 
   //Update only at first load
   useEffect(() => {
@@ -83,7 +116,7 @@ const Categories = () => {
     <div className="categories">
       <Row wrap={false}>
         <Col flex="420px">
-          <AddCategory />
+          <AddCategory categoryToEdit={editCategory} />
         </Col>
         <Col flex="auto" onClick={handleClick}>
           <Slider {...settings}>
