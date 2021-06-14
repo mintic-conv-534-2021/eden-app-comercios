@@ -107,14 +107,15 @@ const Organizations = () => {
 
   const handleClick = (e) => {
     if (typeof e.item !== "undefined") {
-      setSelectedCategory(e.item);
-      //const myObjStr = JSON.stringify(e.item);
-      //console.log("Received in Categories" + myObjStr);
+      let selCategory = e.item.category;
+      setSelectedCategory(selCategory);
+/*       const myObjStr = JSON.stringify(e.item);
+      console.log("Received in Categories" + myObjStr); */
 
       setViewTitle(true);
 
       axios
-        .get(urlOrganizations + e.item.catalogoOrganizacionId)
+        .get(urlOrganizations + selCategory.catalogoOrganizacionId)
         .then((res) => {
           setOrganizations(res.data.organizacionDTOList);
         })

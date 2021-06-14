@@ -5,16 +5,27 @@
 .add-organization .logo-container{
     height: 280px;
     width: 315px;
-    background-color: #E5E5E5;
+    border-radius: 12px;    
+}
+
+.add-organization .logo-container .logo{
+    height: 280px;
+    width: 315px;
     border-radius: 12px;    
 }
 
 .add-organization .banner-container{
     height: 280px;
     width: 975px;
-    background-color: #E5E5E5;
     border-radius: 12px;    
 }
+
+.add-organization .banner-container .banner{
+    height: 280px;
+    width: 975px;
+    border-radius: 12px;    
+}
+
 
 .add-organization .upper-right{
     padding-left: 20px;
@@ -42,6 +53,12 @@
     background-color: #C4C4C4;
     width: 350px;
     height: 40px;
+    border-radius: 12px;
+}
+
+.add-organization .form-edit .ant-select-selector{
+    background-color: #C4C4C4;
+    width: 350px;
     border-radius: 12px;
 }
 
@@ -98,4 +115,24 @@
     letter-spacing: 0em;
     text-align: left;
     color: black;
+}
+
+/* Modal */
+.ant-modal-content{
+    border-radius: 12px;
+}
+
+.custom-modal .description-container{
+    display: flex;
+}
+
+.custom-modal .description-container .general{
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 40px;
+    letter-spacing: 0em;
+    text-align: left;
+    display: flex;
+    align-items: center;    
 }
