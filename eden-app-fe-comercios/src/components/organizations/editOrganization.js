@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from "react";
-import { Row, Col, Form, Input, Button, Select, Checkbox, Modal  } from "antd";
+import React, { useEffect, useState } from "react";
+import { Row, Col, Form, Input, Button, Select, Checkbox, Modal } from "antd";
 import axios from "axios";
 import "./editOrganization.css";
 
 import { API_ADMIN } from "../../context/constants";
 import cert_img from "../../images/Certification.gif";
+
+import rut_image from "../../images/Registry1.png";
+import rm_image from "../../images/Registry2.png";
 
 import { useHistory } from "react-router-dom";
 
@@ -44,7 +47,7 @@ const EditOrganization = (props) => {
   const [organization, setOrganization] = useState("");
   const [categories, setCategories] = useState({});
   const [estaActiva, setEstaActiva] = useState(true);
-  const [isModalVisible, setIsModalVisible] = useState(false);  
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [form] = Form.useForm();
   let history = useHistory();
@@ -53,16 +56,15 @@ const EditOrganization = (props) => {
   if (typeof item !== "undefined") {
     item = item.props.organization;
   }
-  else{
+  else {
     item = "";
     history.push("/");
   }
-  console.log(item);
 
   useEffect(() => {
     if (item !== "") {
       setEstaActiva(item.activo);
-      setOrganization(item.category);
+      setOrganization(item);
 
       axios
         .get(urlCategories)
@@ -83,7 +85,7 @@ const EditOrganization = (props) => {
     //console.log(`checked = ${e.target.checked}`);
   }
 
-  const ToggleChecked  = (e) => {
+  const ToggleChecked = (e) => {
     setEstaActiva(!estaActiva);
   }
 
@@ -105,20 +107,20 @@ const EditOrganization = (props) => {
     //Create object
     const organizationToUpdate = Object.create(updateOrganization);
     organizationToUpdate.nombre = values.organizacion;
-    organizationToUpdate.organizacionId = item.organizacionId;
+    organizationToUpdate.organizacionId = organization.organizacionId;
     organizationToUpdate.descripcion = values.bio;
     organizationToUpdate.telefono = values.phone;
     organizationToUpdate.direccion = values.address;
-    organizationToUpdate.email = item.email;
+    organizationToUpdate.email = organization.email;
     organizationToUpdate.rm = values.registry;
     organizationToUpdate.rut = values.registry_rut;
     organizationToUpdate.rnt = values.registry_tourism;
     organizationToUpdate.activo = estaActiva;
-    organizationToUpdate.urlLogo = item.urlLogo;
-    organizationToUpdate.urlBanner = item.urlBanner;
-    organizationToUpdate.urlRM = values.registry;
-    organizationToUpdate.urlRNT = values.registry_tourism;
-    organizationToUpdate.urlRUT = values.registry_rut;
+    organizationToUpdate.urlLogo = organization.urlLogo;
+    organizationToUpdate.urlBanner = organization.urlBanner;
+    organizationToUpdate.urlRM = organization.urlRM;
+    organizationToUpdate.urlRNT = organization.urlRNT;
+    organizationToUpdate.urlRUT = organization.urlRUT;
     organizationToUpdate.catalogoOrganizacionId = values.category;
     organizationToUpdate.redSocialDTO = {
       urlFacebook: values.url_facebook,
@@ -138,25 +140,24 @@ const EditOrganization = (props) => {
     const blob = new Blob([json], {
       type: 'application/json'
     });
-    
+
     bodyFormData.append('request', blob);
     // if (typeof values.upload.file !== "undefined") {
     //   bodyFormData.append('imagen', values.upload.file.originFileObj, values.upload.file.name);
     // }
-    
+
     axios({
       method: 'put',
       url: urlOrganizationPUT,
       data: bodyFormData,
-      headers : {
-          headers: {
-              'Content-Type': 'application/json'
-          },
+      headers: {
+        headers: {
+          'Content-Type': 'application/json'
+        },
       }
     })
       .then((response) => {
         if (response.status === 202) {
-          console.log("OK, show modal");
           showModal();
         } else {
           console.log("error, response status: " + response.status);
@@ -165,8 +166,9 @@ const EditOrganization = (props) => {
       .catch(function (error) {
         console.log(error);
       });
+
   };
- 
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -236,7 +238,7 @@ const EditOrganization = (props) => {
                         {categories.length != null &&
                           categories.map((i) =>
                             i.catalogoOrganizacionId ===
-                            item.catalogoOrganizacionId ? (
+                              item.catalogoOrganizacionId ? (
                               <Option
                                 key={i.catalogoOrganizacionId}
                                 value={i.catalogoOrganizacionId}
@@ -310,16 +312,37 @@ const EditOrganization = (props) => {
                       <Input className="input" />
                     </Form.Item>
 
+                    <Row>
+                      <Col className="separator" />
+                      <Col>
+                        {item.urlRUT &&
+                          <a href={item.urlRUT} target="blank">
+                            <img src={rut_image} alt="" className="left-image" />
+                          </a>
+                        }
+                        {item.urlRM &&
+                          <a href={item.urlRM} target="blank">
+                            <img src={rm_image} alt="" />
+                          </a>
+                        }
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col>
                     <Form.Item
                       label="Estado"
                       name="status"
                       className="label"
                       initialValue={item.activo}
                     >
-                      <Checkbox checked={estaActiva} onChange={OnCheckedChanged} onClick={ToggleChecked}>{estaActiva ? "Activo" : "Inactivo"}</Checkbox>
+                      <Checkbox
+                        checked={estaActiva}
+                        onChange={OnCheckedChanged}
+                        onClick={ToggleChecked}>
+                        {estaActiva ? "Activo" : "Inactivo"}
+                      </Checkbox>
                     </Form.Item>
-                  </Col>
-                  <Col>
+
                     <Form.Item
                       label="Facebook"
                       name="url_facebook"
@@ -365,12 +388,12 @@ const EditOrganization = (props) => {
                       <Input className="input" />
                     </Form.Item>
 
-                    <Form.Item 
-                      label="Web" 
-                      name="url_web" 
-                      className="label" 
+                    <Form.Item
+                      label="Web"
+                      name="url_web"
+                      className="label"
                       initialValue={item.redSocial.webPage}
-                      >
+                    >
                       <Input className="input" />
                     </Form.Item>
 
@@ -436,7 +459,7 @@ const EditOrganization = (props) => {
             </div>
           </Modal>
         </div>
-      )} 
+      )}
     </div>
   );
 };

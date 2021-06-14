@@ -80,21 +80,28 @@
     color: red;
 }
 
+.add-organization .separator{
+    width: 232px;
+}
+
+.add-organization img.left-image{
+    padding-right: 15px;
+}
+
 .add-organization .button-section{
-    width: 65%;
+    width: 90%;
     padding-top: 20px;
 }
 
 .add-organization .button-section .left-button{
     text-align: right;
     width: 50%;
-    padding-left: 10px;
 }
 
 .add-organization .button-section .right-button{
     text-align: left;
     width: 50%;
-    padding-left: 10px;
+    padding-left: 30px;
 }
 
 .add-organization button{
