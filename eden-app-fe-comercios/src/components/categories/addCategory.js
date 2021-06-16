@@ -16,6 +16,12 @@ const openNotificationWithIcon = (type, title, message) => {
     });
 };
 
+const dummyRequest = ({ file, onSuccess }) => {
+    setTimeout(() => {
+        onSuccess("ok");
+    }, 0);
+};
+
 function getBase64(img, callback) {
     const reader = new FileReader();
     reader.addEventListener('load', () => callback(reader.result));
@@ -112,12 +118,12 @@ const AddCategory = (props) => {
             method: shouldEdit ? 'put' : 'post',
             url: urlPOST,
             data: bodyFormData,
-            headers : {
+            headers: {
                 headers: {
                     'Content-Type': 'application/json'
                 },
             }
-          })
+        })
             .then((response) => {
                 if (response.status === 201) {
                     //Do something
@@ -199,7 +205,8 @@ const AddCategory = (props) => {
                     <Upload
                         name="avatar"
                         showUploadList={false}
-                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                        customRequest={dummyRequest}
+                        accept="image/jpeg,image/png"
                         beforeUpload={beforeUpload}
                         onChange={handleChange}
                         className="upload-box"

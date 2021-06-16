@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Typography } from "antd";
+import { Row, Col, Typography, Button } from "antd";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Slider from "react-slick";
 
@@ -109,8 +110,8 @@ const Organizations = () => {
     if (typeof e.item !== "undefined") {
       let selCategory = e.item.category;
       setSelectedCategory(selCategory);
-/*       const myObjStr = JSON.stringify(e.item);
-      console.log("Received in Categories" + myObjStr); */
+      /*       const myObjStr = JSON.stringify(e.item);
+            console.log("Received in Categories" + myObjStr); */
 
       setViewTitle(true);
 
@@ -125,6 +126,10 @@ const Organizations = () => {
         });
     }
   };
+
+  const NewOrganization = () => {
+
+  }
 
   return (
     <div className="organizations">
@@ -146,13 +151,23 @@ const Organizations = () => {
       </Row>
       <Row wrap={false}>
         <Col flex="auto" className="organization-items">
-          <Row>
+          <Row style={{ paddingBottom: 10 }}>
             <Col>
               <Title className={viewTitle ? "title" : "title-hide"} level={2}>
                 Catálogo de {selectedCategory.catalogoOrganizacionNombre}
               </Title>
             </Col>
             <Col>
+              <Link
+                className="new-org-button"
+                to={{
+                  pathname: '/organizations/add',
+                  state: {}
+                }}>
+                <Button className={viewTitle ? "new-button" : "new-button-hide"} htmlType="button" onClick={NewOrganization}>
+                  <span>Nueva Organización</span>
+                </Button>
+              </Link>
             </Col>
           </Row>
           <Slider {...settingsOrg}>
