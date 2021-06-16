@@ -178,7 +178,7 @@ const EditOrganization = (props) => {
   }
 
   return (
-    <div className="add-organization">
+    <div className="edit-organization">
       {item !== "" && (
         <div>
           <Row wrap={false}>

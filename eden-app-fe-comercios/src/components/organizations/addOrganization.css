@@ -1,68 +1,78 @@
-.edit-organization{
+.add-organization{
     padding-left: 70px;
 }
 
-.edit-organization .logo-container{
+.add-organization .upload-logo .ant-upload.ant-upload-select.ant-upload-select-picture-card{
+    height: 280px;
+    width: 315px;
+}
+
+.add-organization .logo-container{
     height: 280px;
     width: 315px;
     border-radius: 12px;    
 }
 
-.edit-organization .logo-container .logo{
+.add-organization .logo-container .logo{
     height: 280px;
     width: 315px;
     border-radius: 12px;    
 }
 
-.edit-organization .banner-container{
+.add-organization .upload-banner .ant-upload.ant-upload-select.ant-upload-select-picture-card{
+    height: 280px;
+    width: 975px;
+}
+
+.add-organization .banner-container{
     height: 280px;
     width: 975px;
     border-radius: 12px;    
 }
 
-.edit-organization .banner-container .banner{
+.add-organization .banner-container .banner{
     height: 280px;
     width: 975px;
     border-radius: 12px;    
 }
 
 
-.edit-organization .upper-right{
+.add-organization .upper-right{
     padding-left: 20px;
 }
 
-.edit-organization .lower-form{
+.add-organization .lower-form{
     padding-top: 30px;
 }
 
-.edit-organization .lower-form .ant-form-item{
+.add-organization .lower-form .ant-form-item{
     margin-bottom: 10px;
 }
 
-.edit-organization .ant-form-item-label{
+.add-organization .ant-form-item-label{
     font-weight: bold;
     width: 232px;
     text-align: right;
 }
 
-.edit-organization .ant-form-item-label > label{
+.add-organization .ant-form-item-label > label{
     font-size: 16px;
 }
 
-.edit-organization input.input{
+.add-organization input.input{
     background-color: #C4C4C4;
     width: 350px;
     height: 40px;
     border-radius: 12px;
 }
 
-.edit-organization .form-edit .ant-select-selector{
+.add-organization .form-edit .ant-select-selector{
     background-color: #C4C4C4;
     width: 350px;
     border-radius: 12px;
 }
 
-.edit-organization textarea.input{
+.add-organization textarea.input{
     background-color: #C4C4C4;
     width: 350px;
     height: 92px;
@@ -70,41 +80,41 @@
     resize: none;
 }
 
-.edit-organization .required-form{
+.add-organization .required-form{
     font-size: 12px;
     font-style: italic;
     padding-left: 40%;
 }
 
-.edit-organization span.required{
+.add-organization span.required{
     color: red;
 }
 
-.edit-organization .separator{
+.add-organization .separator{
     width: 232px;
 }
 
-.edit-organization img.left-image{
+.add-organization img.left-image{
     padding-right: 15px;
 }
 
-.edit-organization .button-section{
+.add-organization .button-section{
     width: 90%;
     padding-top: 20px;
 }
 
-.edit-organization .button-section .left-button{
+.add-organization .button-section .left-button{
     text-align: right;
     width: 50%;
 }
 
-.edit-organization .button-section .right-button{
+.add-organization .button-section .right-button{
     text-align: left;
     width: 50%;
     padding-left: 30px;
 }
 
-.edit-organization button{
+.add-organization button.action-button{
     background-color: #79DE95;
     border-color: #79DE95;
     height: 68px;
@@ -114,7 +124,7 @@
     padding: 10px;
 }
 
-.edit-organization  button span{
+.add-organization  button.action-button span{
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
